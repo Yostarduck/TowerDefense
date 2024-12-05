@@ -13,8 +13,8 @@ public class PathNode : MonoBehaviour
 
 #region GETTERS
 
-  public (int x, int y)
-  GetPosition() => ((int)transform.position.x, (int)transform.position.z);
+  public Vector2Int
+  GetPosition() => new((int)transform.position.x, (int)transform.position.z);
 
   public List<PathNode>
   GetNeighbours() => neighbours;
