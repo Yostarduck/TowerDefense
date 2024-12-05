@@ -6,6 +6,7 @@ public class BaseCharacter : BaseEntity
 {
   #region PROPERTIES
   [Header("Base Character Properties")]
+  [SerializeField]
   protected float movementSpeed = 5.0f;
   #endregion
 

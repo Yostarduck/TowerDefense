@@ -20,8 +20,9 @@ public class BaseEnemy : BaseCharacter
       Debug.LogWarning("Pathfinding not built", gameObject);
       return;
     }
-      
-    path = Pathfinding.instance.GetPathFromPosition(new((int)transform.position.x, (int)transform.position.z));
+    
+    Vector2Int sourcePosition = new(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
+    path = Pathfinding.instance.GetPathFromPosition(sourcePosition);
   }
 
   /// <summary>

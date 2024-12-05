@@ -161,17 +161,20 @@ public class Pathfinding : MonoBehaviour
 /// <returns></returns>
   public List<Vector2Int>
   GetPathFromPosition(Vector2Int position) {
-    if (!built) {
-      Debug.LogWarning("Pathfinding not built", gameObject);
-      return null;
+    // Safety checks
+    {
+      if (!built) {
+        Debug.LogWarning("Pathfinding not built", gameObject);
+        return null;
+      }
+
+      if (targetNode == null) {
+        Debug.LogWarning("No target node set", gameObject);
+        return null;
+      }
     }
 
-    if (targetNode == null) {
-      Debug.LogWarning("No target node set", gameObject);
-      return null;
-    }
-
-    if (!gridNodes.TryGetValue(new(position.x, position.y), out PathNode startNode)) {
+    if (!gridNodes.TryGetValue(position, out PathNode startNode)) {
       Debug.LogWarning("Start node not found", gameObject);
       return null;
     }
