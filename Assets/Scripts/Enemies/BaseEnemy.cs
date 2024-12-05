@@ -30,6 +30,10 @@ public class BaseEnemy : BaseCharacter
   /// </summary>
   void
   Update() {
+  }
+
+  protected void
+  FollowPath() {
     if (path == null)
       return;
 
