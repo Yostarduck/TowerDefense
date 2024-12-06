@@ -134,8 +134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_maxHealth: 100
   m_attackDamage: 10
-  m_attackRange: 3
-  m_attackCooldown: 1
+  m_attackRange: 5
+  m_attackCooldown: 0.5
   m_attackDuration: 0.5
   cannonBallPrefab: {fileID: 2968686998102035162, guid: 27ae5a28f96b4d745addd7ae7e2fc3b7,
     type: 3}

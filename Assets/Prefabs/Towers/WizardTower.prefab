@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_maxHealth: 100
   m_attackDamage: 1
-  m_attackRange: 2
+  m_attackRange: 3
   m_attackCooldown: 0.2
   m_attackDuration: 0
   circleParticleSystem: {fileID: 7865623136362365011}

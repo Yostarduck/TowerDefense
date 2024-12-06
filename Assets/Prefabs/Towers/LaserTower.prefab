@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxHealth: 100
-  m_attackDamage: 2
+  m_attackDamage: 4
   m_attackRange: 2
   m_attackCooldown: 5
   m_attackDuration: 0.2
