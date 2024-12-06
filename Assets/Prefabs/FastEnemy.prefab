@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1965583782603884024}
   - component: {fileID: 2530503994570329001}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FastEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 8190804477601913359}
   - component: {fileID: 2748459362580195523}
   - component: {fileID: 6853566480309051368}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FastEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
