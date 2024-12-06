@@ -120,7 +120,12 @@ public class BaseEntity : MonoBehaviour
   /// <param name="damage">Amount of damage to receive</param>
   public void
   Damage(int damage) {
-    health -= damage;
+    damage = Math.Min(0, -damage);
+
+    health += damage;
+
+    if (DamageParticles.isInitialized)
+      DamageParticles.instance.PlayDamageParticles(transform.position, damage);
 
     OnDamageEvent?.Invoke();
 
@@ -136,7 +141,12 @@ public class BaseEntity : MonoBehaviour
   /// <param name="heal">Amount to heal</param>
   public void
   Heal(int heal) {
+    heal = Math.Max(0, heal);
+
     OnHealEvent?.Invoke();
+    
+    if (DamageParticles.isInitialized)
+      DamageParticles.instance.PlayDamageParticles(transform.position, heal);
 
     health = Math.Min(health + heal, maxHealth);
   }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class EntitiesHandler : MonoBehaviour
 {
 #region SINGLETON
+
   public static EntitiesHandler instance {
     get => m_instance;
     private set => m_instance = value;
