@@ -11,6 +11,14 @@ public class BaseEnemy : BaseCharacter
   /// </summary>
   void
   Start() {
+    if (!EntitiesHandler.isInitialized) {
+      Debug.LogWarning("EntitiesHandler not initialized", gameObject);
+      return;
+    }
+    else {
+      EntitiesHandler.instance.RegisterEntity(this);
+    }
+    
     if (!Pathfinding.isInitialized) {
       Debug.LogWarning("Pathfinding not initialized", gameObject);
       return;
@@ -30,6 +38,7 @@ public class BaseEnemy : BaseCharacter
   /// </summary>
   void
   Update() {
+    FollowPath();
   }
 
   protected void
