@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1965583782603884024}
+  - component: {fileID: 5430591468480694302}
   - component: {fileID: 2530503994570329001}
   m_Layer: 6
   m_Name: FastEnemy
@@ -33,6 +34,33 @@ Transform:
   - {fileID: 8190804477601913359}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &5430591468480694302
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7071871226055699895}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!114 &2530503994570329001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,11 +75,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canFly: 0
   maxHealth: 20
-  attackDamage: 2
-  attackRange: 1
-  attackCooldown: 0.25
-  attackDuration: 0.25
-  movementSpeed: 2
+  m_attackDamage: 10
+  m_attackRange: 1
+  m_attackCooldown: 1
+  m_attackDuration: 0.5
+  m_headOffset: 0.1
+  m_movementSpeed: 3
 --- !u!1 &8946774433826812268
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,6 +92,7 @@ GameObject:
   - component: {fileID: 8190804477601913359}
   - component: {fileID: 2748459362580195523}
   - component: {fileID: 6853566480309051368}
+  - component: {fileID: 4204102339193775023}
   m_Layer: 6
   m_Name: FastEnemy
   m_TagString: Untagged
@@ -135,3 +165,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &4204102339193775023
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8946774433826812268}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.49999997
+  m_Height: 1.9999999
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

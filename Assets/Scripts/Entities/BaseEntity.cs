@@ -10,12 +10,9 @@ public class BaseEntity : MonoBehaviour
 #region PROPERTIES
   [Header("Base Entity Properties")]
   
-  [SerializeField] protected bool canFly = false;
-
+  protected HashSet<BaseEntity> focusList = new();
   public bool isDead => health <= 0;
   public bool isAttacking { get; protected set; } = false;
-
-  protected HashSet<BaseEntity> focusList = new();
   
   [Header("Health Properties")]
 
@@ -25,10 +22,14 @@ public class BaseEntity : MonoBehaviour
   
   [Header("Attack Properties")]
 
-  [SerializeField] protected int attackDamage = 10;
-  [SerializeField] protected float attackRange = 1.0f;
-  [SerializeField] protected float attackCooldown = 1.0f;
-  [SerializeField] protected float attackDuration = 0.5f;
+  [SerializeField] protected int m_attackDamage = 10;
+  public int attackDamage => m_attackDamage;
+  [SerializeField] protected float m_attackRange = 1.0f;
+  public float attackRange => m_attackRange;
+  [SerializeField] protected float m_attackCooldown = 1.0f;
+  public float attackCooldown => m_attackCooldown;
+  [SerializeField] protected float m_attackDuration = 0.5f;
+  public float attackDuration => m_attackDuration;
 #endregion
 
 #region ACTIONS
@@ -95,16 +96,15 @@ public class BaseEntity : MonoBehaviour
 
 #region BASE_ENTITY_METHODS
   /// <summary>
-  /// Attack focused target.
+  /// Attack target.
   /// 
   /// Calls OnAttackEvent event.
   /// </summary>
+  /// <param name="target">Target to attack</param>
   protected void
-  Attack() {
-    if (focusList.Count == 0)
+  Attack(BaseEntity target) {
+    if (target == null)
       return;
-
-    BaseEntity target = focusList.First();
 
     target.Damage(attackDamage);
 

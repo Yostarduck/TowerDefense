@@ -6,36 +6,32 @@ using UnityEngine;
 public class BaseTower : BaseEntity
 {
 #region UNITY_METHODS
+
   /// <summary>
   /// Start is called before the first frame update.
   /// </summary>
-  new void
+  new protected void
   Start() {
     base.Start();
-
-    StartCoroutine(AttackRoutine());
   }
 
   /// <summary>
   /// Update is called once per frame.
   /// </summary>
-  new void
+  new protected void
   Update() {
     base.Update();
 
     UpdateFocusList();
   }
+
 #endregion
 
-  private IEnumerator
-  AttackRoutine() {
-    while (true) {
-      yield return new WaitForSeconds(attackCooldown);
+#region PROPERTIES
 
-      Attack();
-    }
-  }
-
+  /// <summary>
+  /// Updates the enemies to focus on.
+  /// </summary>
   private void
   UpdateFocusList() {
     if (!EntitiesHandler.isInitialized) {
@@ -71,7 +67,10 @@ public class BaseTower : BaseEntity
     focusList = enemiesInRange;
   }
 
+#endregion
+
 #if UNITY_EDITOR
+
   private void
   OnDrawGizmos() {
     int circleResolution = 64;

@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class BaseEnemy : BaseCharacter
 {
-  private List<Vector2Int> path;
 
   /// <summary>
   /// Start is called before the first frame update
   /// </summary>
-  new void
+  new protected void
   Start() {
     base.Start();
 
@@ -30,27 +29,10 @@ public class BaseEnemy : BaseCharacter
   /// <summary>
   /// Update is called once per frame
   /// </summary>
-  new void
+  new protected void
   Update() {
     base.Update();
 
     FollowPath();
-  }
-
-  protected void
-  FollowPath() {
-    if (path == null)
-      return;
-
-    if (path.Count == 0)
-      return;
-
-    Vector2Int targetPosition = path[0];
-    Vector3 target = new Vector3(targetPosition.x, transform.position.y, targetPosition.y);
-    transform.position = Vector3.MoveTowards(transform.position, target, movementSpeed * Time.deltaTime);
-
-    if (transform.position == target) {
-      path.RemoveAt(0);
-    }
   }
 }
