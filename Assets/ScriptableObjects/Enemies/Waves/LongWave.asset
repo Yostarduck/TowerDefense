@@ -16,8 +16,12 @@ MonoBehaviour:
   - bundle: {fileID: 11400000, guid: 8ead3d52ca173ed45b988f8bcc0c44bb, type: 2}
     startDelay: 0
   - bundle: {fileID: 11400000, guid: ca02fdee89436ae40a1ee03e3911f6b9, type: 2}
+    startDelay: 1
+  - bundle: {fileID: 11400000, guid: c9dea3758b635bf4c9a9aab61d0c045d, type: 2}
     startDelay: 3
-  - bundle: {fileID: 11400000, guid: ca02fdee89436ae40a1ee03e3911f6b9, type: 2}
-    startDelay: 3
-  - bundle: {fileID: 11400000, guid: 8ead3d52ca173ed45b988f8bcc0c44bb, type: 2}
+  - bundle: {fileID: 11400000, guid: 71e4dcfb475a0a74d9b2d6dd583c52a9, type: 2}
+    startDelay: 4
+  - bundle: {fileID: 11400000, guid: 71e4dcfb475a0a74d9b2d6dd583c52a9, type: 2}
     startDelay: 8
+  - bundle: {fileID: 11400000, guid: c9dea3758b635bf4c9a9aab61d0c045d, type: 2}
+    startDelay: 1

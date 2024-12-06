@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1965583782603884024}
   - component: {fileID: 5430591468480694302}
-  - component: {fileID: 2530503994570329001}
+  - component: {fileID: -8016717238576347091}
   m_Layer: 6
   m_Name: FastEnemy
   m_TagString: Enemy
@@ -61,7 +61,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &2530503994570329001
+--- !u!114 &-8016717238576347091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,16 +70,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7071871226055699895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f9d2dedc42a1e4c9528cd84d0c57d7, type: 3}
+  m_Script: {fileID: 11500000, guid: 42902216f3be1cc409830c7c03605530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canFly: 0
-  maxHealth: 20
-  m_attackDamage: 10
+  maxHealth: 30
+  m_attackDamage: 3
   m_attackRange: 1
   m_attackCooldown: 1
   m_attackDuration: 0.5
-  m_headOffset: 0.1
+  m_headOffset: 0.2
+  m_canFly: 0
   m_movementSpeed: 3
 --- !u!1 &8946774433826812268
 GameObject:
@@ -143,7 +143,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e2a7015cefe20ba4fbb64eaf6c726441, type: 2}
+  - {fileID: 2100000, guid: f823fc1cf0f8cf045b502ebf6586f58b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

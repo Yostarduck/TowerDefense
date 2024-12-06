@@ -4759,16 +4759,29 @@ MonoBehaviour:
     waves:
     - {fileID: 11400000, guid: 6f63633f8a1167a479e607668738d2ec, type: 2}
     - {fileID: 11400000, guid: 6f63633f8a1167a479e607668738d2ec, type: 2}
+    - {fileID: 11400000, guid: cc519502e06247b47902413934410bc4, type: 2}
     - {fileID: 11400000, guid: d6f48256319bcfb428eeaefca6c7412a, type: 2}
+    - {fileID: 11400000, guid: 5171541f817046045a3a32276d79de6b, type: 2}
   - origin: {fileID: 1348951008}
     waves:
     - {fileID: 11400000, guid: 6f63633f8a1167a479e607668738d2ec, type: 2}
+    - {fileID: 11400000, guid: cc519502e06247b47902413934410bc4, type: 2}
+    - {fileID: 11400000, guid: 5171541f817046045a3a32276d79de6b, type: 2}
     - {fileID: 11400000, guid: d6f48256319bcfb428eeaefca6c7412a, type: 2}
     - {fileID: 11400000, guid: d6f48256319bcfb428eeaefca6c7412a, type: 2}
   - origin: {fileID: 2098000884}
     waves:
     - {fileID: 0}
     - {fileID: 11400000, guid: 6f63633f8a1167a479e607668738d2ec, type: 2}
+    - {fileID: 11400000, guid: cc519502e06247b47902413934410bc4, type: 2}
+    - {fileID: 11400000, guid: 6f63633f8a1167a479e607668738d2ec, type: 2}
+    - {fileID: 11400000, guid: 5171541f817046045a3a32276d79de6b, type: 2}
+  - origin: {fileID: 1204215450}
+    waves:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 11400000, guid: d6f48256319bcfb428eeaefca6c7412a, type: 2}
+    - {fileID: 11400000, guid: d6f48256319bcfb428eeaefca6c7412a, type: 2}
     - {fileID: 11400000, guid: d6f48256319bcfb428eeaefca6c7412a, type: 2}
 --- !u!4 &955615985
 Transform:
@@ -11419,10 +11432,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e1705f3c7855042a35e7e80bc2f5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entities: []
-  towers: []
-  characters: []
-  enemies: []
 --- !u!1 &1341802510
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BaseEnemy : BaseCharacter
 {
+#region UNITY_METHODS
 
   /// <summary>
   /// Start is called before the first frame update
@@ -32,7 +33,7 @@ public class BaseEnemy : BaseCharacter
   new protected void
   Update() {
     base.Update();
-
-    FollowPath();
   }
+
+#endregion
 }

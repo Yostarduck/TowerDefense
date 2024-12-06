@@ -20,10 +20,10 @@ public class EntitiesHandler : MonoBehaviour
 
 #region PROPERTIES
 
-  public List<BaseEntity> entities = new();
-  public List<BaseTower> towers = new();
-  public List<BaseCharacter> characters = new();
-  public List<BaseEnemy> enemies = new();
+  public HashSet<BaseEntity> entities = new();
+  public HashSet<BaseTower> towers = new();
+  public HashSet<BaseCharacter> characters = new();
+  public HashSet<BaseEnemy> enemies = new();
 
 #endregion
 
@@ -111,14 +111,15 @@ public class EntitiesHandler : MonoBehaviour
   /// <param name="range">[Optional param] Maximum range to consider.</param>
   /// <returns>The closest entity to the entity, or null if none is found.</returns>
   private BaseEntity
-  GetClosestEntity(BaseEntity entityReference, in List<BaseEntity> entities, float? range = null) {
+  GetClosestEntity(BaseEntity entityReference, in HashSet<BaseEntity> entities, float? range = null) {
     if (entityReference == null)
       return null;
     
     if (entities.Count == 0)
       return null;
     
-    List<BaseEntity> searchList = entities.FindAll(entity => entity != entityReference);
+    HashSet<BaseEntity> searchList = entities;
+    searchList.Remove(entityReference);
 
     Vector3 position = entityReference.transform.position;
     BaseEntity closestEntity = null;
@@ -138,9 +139,41 @@ public class EntitiesHandler : MonoBehaviour
 
     return closestEntity;
   }
+  
+  /// <summary>
+  /// Get the entities in range of an entity.
+  /// </summary>
+  /// <param name="entityReference">Entity from which to compare distance.</param>
+  /// <param name="entities">List of entities to consider.</param>
+  /// <param name="range">Maximum range to consider.</param>
+  /// <returns>The closest entity to the entity, or null if none is found.</returns>
+  private HashSet<BaseEntity>
+  GetClosestEntities(BaseEntity entityReference, in HashSet<BaseEntity> entities, float range) {
+    if (entityReference == null)
+      return null;
+    
+    if (entities.Count == 0)
+      return null;
+    
+    HashSet<BaseEntity> searchList = entities;
+    searchList.Remove(entityReference);
+
+    Vector3 position = entityReference.transform.position;
+    HashSet<BaseEntity> closestEntities = new();
+
+    foreach (BaseEntity entity in searchList) {
+      float distance = Vector3.Distance(entity.transform.position, position);
+
+      if (distance < range) {
+        closestEntities.Add(entity);
+      }
+    }
+
+    return closestEntities;
+  }
 
   /// <summary>
-  /// 
+  /// Get the closest tower to an entity.
   /// </summary>
   /// <param name="entityReference"></param>
   /// <param name="range"></param>
@@ -153,8 +186,26 @@ public class EntitiesHandler : MonoBehaviour
     if (towers.Count == 0)
       return null;
     
-    List<BaseEntity> towerList = towers.Cast<BaseEntity>().ToList();
+    HashSet<BaseEntity> towerList = towers.Cast<BaseEntity>().ToHashSet();
     return GetClosestEntity(entityReference, towerList, range) as BaseTower;
+  }
+
+  /// <summary>
+  /// Get the closests towers to an entity.
+  /// </summary>
+  /// <param name="entityReference"></param>
+  /// <param name="range"></param>
+  /// <returns></returns>
+  public HashSet<BaseTower>
+  GetClosestTowers(BaseEntity entityReference, float range) {
+    if (entityReference == null)
+      return null;
+
+    if (towers.Count == 0)
+      return null;
+    
+    HashSet<BaseEntity> towerList = towers.Cast<BaseEntity>().ToHashSet();
+    return GetClosestEntities(entityReference, towerList, range)?.Cast<BaseTower>().ToHashSet();
   }
   
   /// <summary>
@@ -171,26 +222,44 @@ public class EntitiesHandler : MonoBehaviour
     if (characters.Count == 0)
       return null;
     
-    List<BaseEntity> characterList = characters.Cast<BaseEntity>().ToList();
+    HashSet<BaseEntity> characterList = characters.Cast<BaseEntity>().ToHashSet();
     return GetClosestEntity(entityReference, characterList, range) as BaseCharacter;
   }
   
   /// <summary>
-  /// Get the closest enemy to an entity.
+  /// Get the closest characters to an entity.
+  /// </summary>
+  /// <param name="entityReference">Entity from which to compare distance.</param>
+  /// <param name="range">[Optional param] Maximum range to consider.</param>
+  /// <returns>The closest characters to the position, or null if none is found.</returns>
+  public HashSet<BaseCharacter>
+  GetClosestCharacters(BaseEntity entityReference, float range) {
+    if (entityReference == null)
+      return null;
+
+    if (characters.Count == 0)
+      return null;
+    
+    HashSet<BaseEntity> characterList = characters.Cast<BaseEntity>().ToHashSet();
+    return GetClosestEntities(entityReference, characterList, range)?.Cast<BaseCharacter>().ToHashSet();
+  }
+  
+  /// <summary>
+  /// Get the closest enemies to an entity.
   /// </summary>
   /// <param name="entityReference">Entity from which to compare distance.</param>
   /// <param name="range">[Optional param] Maximum range to consider.</param>
   /// <returns>The closest enemy to the position, or null if none is found.</returns>
-  public BaseEnemy
-  GetClosestEnemy(BaseEntity entityReference, float? range = null) {
+  public HashSet<BaseEnemy>
+  GetClosestEnemies(BaseEntity entityReference, float range) {
     if (entityReference == null)
       return null;
 
     if (enemies.Count == 0)
       return null;
     
-    List<BaseEntity> enemyList = enemies.Cast<BaseEntity>().ToList();
-    return GetClosestEntity(entityReference, enemyList, range) as BaseEnemy;
+    HashSet<BaseEntity> enemyList = enemies.Cast<BaseEntity>().ToHashSet();
+    return GetClosestEntities(entityReference, enemyList, range).Cast<BaseEnemy>().ToHashSet();
   }
 
 #endregion
