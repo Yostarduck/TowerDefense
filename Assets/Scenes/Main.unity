@@ -5477,7 +5477,7 @@ GameObject:
   - component: {fileID: 1132035423}
   - component: {fileID: 1132035426}
   m_Layer: 0
-  m_Name: Damage Particle System
+  m_Name: DAMAGE PARTICLE SYSTEM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14992,11 +14992,11 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 534095967}
   - {fileID: 22222245}
-  - {fileID: 1312202662}
-  - {fileID: 955615985}
   - {fileID: 1420618534}
   - {fileID: 556224258}
   - {fileID: 889758418}
   - {fileID: 295682045}
   - {fileID: 277655134}
+  - {fileID: 1312202662}
+  - {fileID: 955615985}
   - {fileID: 1132035425}
