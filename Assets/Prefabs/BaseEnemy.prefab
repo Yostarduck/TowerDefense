@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canFly: 0
-  maxHealth: 100
+  maxHealth: 40
   attackDamage: 10
   attackRange: 1
   attackCooldown: 1

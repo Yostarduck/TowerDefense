@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BaseEntity : MonoBehaviour
@@ -13,7 +15,7 @@ public class BaseEntity : MonoBehaviour
   public bool isDead => health <= 0;
   public bool isAttacking { get; protected set; } = false;
 
-  protected List<BaseEntity> focusList = new();
+  protected HashSet<BaseEntity> focusList = new();
   
   [Header("Health Properties")]
 
@@ -31,28 +33,28 @@ public class BaseEntity : MonoBehaviour
 
 #region ACTIONS
   // Called when the entity spawns
-  public Action OnSpawn;
+  public Action OnSpawnEvent;
 
   // Called when the entity focuses a target
-  public Action OnFocusGain;
+  public Action OnFocusGainEvent;
 
   // Called when the entity loses focus on a target
-  public Action OnFocusLost;
+  public Action OnFocusLostEvent;
 
   // Called when the entity attacks
-  public Action OnAttack;
+  public Action OnAttackEvent;
 
   // Called when the entity is damaged
-  public Action OnDamage;
+  public Action OnDamageEvent;
 
   // Called when the entity dies
-  public Action OnDeath;
+  public Action OnDeathEvent;
 
   // Called when the entity is healed
-  public Action OnHeal;
+  public Action OnHealEvent;
   
   // Called when the entity is destroyed
-  public Action OnDestroy;
+  public Action OnDestroyEvent;
 #endregion
 
 #region UNITY_METHODS
@@ -60,17 +62,33 @@ public class BaseEntity : MonoBehaviour
   /// <summary>
   /// Start is called before the first frame update.
   /// </summary>
-  void
+  protected void
   Start() {
+    if (!EntitiesHandler.isInitialized) {
+      Debug.LogWarning("EntitiesHandler not initialized", gameObject);
+      return;
+    }
+    else {
+      EntitiesHandler.instance.RegisterEntity(this);
+    }
+
     health = maxHealth;
-    OnSpawn?.Invoke();
+    OnSpawnEvent?.Invoke();
   }
 
   /// <summary>
   /// Update is called once per frame.
   /// </summary>
-  void
+  protected void
   Update() {
+  }
+  
+  /// <summary>
+  /// 
+  /// </summary>
+  protected void
+  OnDestroy() {
+    OnDestroyEvent?.Invoke();
   }
 
 #endregion
@@ -79,32 +97,32 @@ public class BaseEntity : MonoBehaviour
   /// <summary>
   /// Attack focused target.
   /// 
-  /// Calls OnAttack event.
+  /// Calls OnAttackEvent event.
   /// </summary>
   protected void
   Attack() {
     if (focusList.Count == 0)
       return;
 
-    BaseEntity target = focusList[0];
+    BaseEntity target = focusList.First();
 
     target.Damage(attackDamage);
 
-    OnAttack?.Invoke();
+    OnAttackEvent?.Invoke();
   }
   
   /// <summary>
   /// Damages this entity.
   /// If health reaches 0, entity dies and Die() is called.
   /// 
-  /// Calls OnDamage event.
+  /// Calls OnDamageEvent event.
   /// </summary>
   /// <param name="damage">Amount of damage to receive</param>
   public void
   Damage(int damage) {
     health -= damage;
 
-    OnDamage?.Invoke();
+    OnDamageEvent?.Invoke();
 
     if (health <= 0)
       Die();
@@ -113,12 +131,12 @@ public class BaseEntity : MonoBehaviour
   /// <summary>
   /// Heals this entity, healt is capped at maxHealth
   /// 
-  /// Calls OnHeal event.
+  /// Calls OnHealEvent event.
   /// </summary>
   /// <param name="heal">Amount to heal</param>
   public void
   Heal(int heal) {
-    OnHeal?.Invoke();
+    OnHealEvent?.Invoke();
 
     health = Math.Min(health + heal, maxHealth);
   }
@@ -126,12 +144,20 @@ public class BaseEntity : MonoBehaviour
   /// <summary>
   /// Kills this entity.
   /// 
-  /// Calls OnDeath and OnDestroy events.
+  /// Calls OnDeathEvent and OnDestroyEvent events.
   /// </summary>
   protected void
   Die() {
-    OnDeath?.Invoke();
-    OnDestroy?.Invoke();
+    if (!EntitiesHandler.isInitialized) {
+      Debug.LogWarning("EntitiesHandler not initialized", gameObject);
+      return;
+    }
+    else {
+      EntitiesHandler.instance.UnregisterEntity(this);
+    }
+
+    OnDeathEvent?.Invoke();
+    
     Destroy(gameObject);
   }
 #endregion

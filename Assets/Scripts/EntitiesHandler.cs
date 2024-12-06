@@ -20,6 +20,7 @@ public class EntitiesHandler : MonoBehaviour
 #region PROPERTIES
 
   public List<BaseEntity> entities = new();
+  public List<BaseTower> towers = new();
   public List<BaseCharacter> characters = new();
   public List<BaseEnemy> enemies = new();
 
@@ -70,6 +71,10 @@ public class EntitiesHandler : MonoBehaviour
   public void
   RegisterEntity(BaseEntity entity) {
     entities.Add(entity);
+
+    if (entity is BaseTower tower) {
+      towers.Add(tower);
+    }
 
     if (entity is BaseCharacter character) {
       characters.Add(character);
@@ -131,6 +136,24 @@ public class EntitiesHandler : MonoBehaviour
       return null;
 
     return closestEntity;
+  }
+
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <param name="entityReference"></param>
+  /// <param name="range"></param>
+  /// <returns></returns>
+  public BaseTower
+  GetClosestTower(BaseEntity entityReference, float? range = null) {
+    if (entityReference == null)
+      return null;
+
+    if (towers.Count == 0)
+      return null;
+    
+    List<BaseEntity> towerList = towers.Cast<BaseEntity>().ToList();
+    return GetClosestEntity(entityReference, towerList, range) as BaseTower;
   }
   
   /// <summary>
