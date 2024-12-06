@@ -94,6 +94,10 @@ public class EntitiesHandler : MonoBehaviour
   UnregisterEntity(BaseEntity entity) {
     entities.Remove(entity);
 
+    if (entity is BaseTower tower) {
+      towers.Remove(tower);
+    }
+
     if (entity is BaseCharacter character) {
       characters.Remove(character);
     }

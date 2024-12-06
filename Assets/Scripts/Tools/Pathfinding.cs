@@ -7,6 +7,7 @@ using UnityEngine;
 public class Pathfinding : MonoBehaviour
 {
 #region SINGLETON
+
   public static Pathfinding instance {
     get => m_instance;
     private set => m_instance = value;
@@ -15,18 +16,21 @@ public class Pathfinding : MonoBehaviour
   private static Pathfinding m_instance = null;
 
   public static bool isInitialized => instance != null;
+
 #endregion
 
 #region PROPERTIES
+
   [SerializeField]
   private bool autoBuild = true;
 
-  public bool built { get; private set; } = false;
+  public bool isBuilt { get; private set; } = false;
 
   [SerializeField]
   private PathNode targetNode;
 
   private Dictionary<Vector2Int, PathNode> gridNodes;
+
 #endregion
 
 #region UNITY_METHODS
@@ -55,6 +59,8 @@ public class Pathfinding : MonoBehaviour
   }
   
 #endregion
+
+#region METHODS
 
   /// <summary>
   /// Utility function to build the pathfinding grid.
@@ -151,20 +157,20 @@ public class Pathfinding : MonoBehaviour
       }
     }
 
-    built = true;
+    isBuilt = true;
   }
 
-/// <summary>
-/// Get a path from a given position to the target node.
-/// </summary>
-/// <param name="position">Position to start the path from.</param>
-/// <returns></returns>
+  /// <summary>
+  /// Get a path from a given position to the target node.
+  /// </summary>
+  /// <param name="position">Position to start the path from.</param>
+  /// <returns></returns>
   public List<Vector2Int>
   GetPathFromPosition(Vector2Int position) {
     // Safety checks
     {
-      if (!built) {
-        Debug.LogWarning("Pathfinding not built", gameObject);
+      if (!isBuilt) {
+        Debug.LogWarning("Pathfinding not isBuilt", gameObject);
         return null;
       }
 
@@ -207,4 +213,24 @@ public class Pathfinding : MonoBehaviour
 
     return path;
   }
+
+  /// <summary>
+  /// Get a node from a given position.
+  /// </summary>
+  /// <param name="position">Position to get the node from.</param>
+  /// <returns></returns>
+  public PathNode
+  GetNode(Vector2Int position) {
+    if (!isBuilt) {
+      Debug.LogWarning("Pathfinding not isBuilt", gameObject);
+      return null;
+    }
+
+    if (!gridNodes.TryGetValue(position, out PathNode node))
+      return null;
+
+    return node;
+  }
+
+#endregion
 }

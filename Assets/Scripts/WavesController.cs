@@ -83,7 +83,7 @@ public class WavesController : MonoBehaviour
   /// Get the max number of waves.
   /// </summary>
   /// <returns>Max number of waves</returns>
-  private int
+  public int
   GetMaxWaves() {
     int maxWaves = 0;
 
@@ -103,9 +103,11 @@ public class WavesController : MonoBehaviour
 
     for (currentWave = 0; currentWave < maxWaves; currentWave++) {
 
-      //while (!startNextWave) {
-      //  yield return null;
-      //}
+      GameController.instance?.EnableNextWave();
+
+      while (!startNextWave) {
+        yield return null;
+      }
 
       startNextWave = false;
 
@@ -129,7 +131,15 @@ public class WavesController : MonoBehaviour
       while (pendingWaves > 0) {
         yield return new WaitForSeconds(1.0f);
       }
+
+      while (EntitiesHandler.instance.enemies.Count > 0) {
+        yield return null;
+      }
+      
+      yield return new WaitForSeconds(3.0f);
     }
+
+    GameController.instance?.Win();
   }
 
   private IEnumerator

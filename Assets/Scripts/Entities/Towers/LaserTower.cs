@@ -49,8 +49,6 @@ public class LaserTower : BaseTower
   private IEnumerator
   AttackCoroutine() {
     while (true) {
-      yield return new WaitForSeconds(attackCooldown);
-
       isAttacking = false;
 
       while (focusList.Count <= 0) {
@@ -104,6 +102,8 @@ public class LaserTower : BaseTower
       
       if (enemy != null)
         enemy.Damage(attackDamage);
+
+      yield return new WaitForSeconds(attackCooldown);
     }
   }
 

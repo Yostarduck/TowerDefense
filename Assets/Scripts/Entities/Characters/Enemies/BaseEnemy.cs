@@ -18,7 +18,7 @@ public class BaseEnemy : BaseCharacter
       return;
     }
 
-    if (!Pathfinding.instance.built) {
+    if (!Pathfinding.instance.isBuilt) {
       Debug.LogWarning("Pathfinding not built", gameObject);
       return;
     }

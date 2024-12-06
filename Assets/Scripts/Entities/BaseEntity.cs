@@ -17,7 +17,9 @@ public class BaseEntity : MonoBehaviour
   [Header("Health Properties")]
 
   [SerializeField]
-  protected int maxHealth = 100;
+  protected int m_maxHealth = 100;
+  public int maxHealth => m_maxHealth;
+
   public int health { get; protected set; }
   
   [Header("Attack Properties")]
@@ -101,7 +103,7 @@ public class BaseEntity : MonoBehaviour
   /// Calls OnAttackEvent event.
   /// </summary>
   /// <param name="target">Target to attack</param>
-  protected void
+  public void
   Attack(BaseEntity target) {
     if (target == null)
       return;
@@ -156,7 +158,7 @@ public class BaseEntity : MonoBehaviour
   /// 
   /// Calls OnDeathEvent and OnDestroyEvent events.
   /// </summary>
-  protected void
+  public void
   Die() {
     if (!EntitiesHandler.isInitialized) {
       Debug.LogWarning("EntitiesHandler not initialized", gameObject);
