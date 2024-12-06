@@ -26,16 +26,22 @@ public class WavesController : MonoBehaviour
 #region PROPERTIES
   public WaveOrigin[] waveOrigins;
 
+  private bool startNextWave = false;
+
   private int currentWave = 0;
-  public int CurrentWave {
-    get => currentWave;
-  }
+  public int CurrentWave => currentWave;
 
   private int pendingWaves = 0;
+
+  private Coroutine wavesCoroutine;
 
 #endregion
 
 #region UNITY_METHODS
+
+  /// <summary>
+  /// Awake is called when the script instance is being loaded.
+  /// </summary>
   void
   Awake() {
     if (instance == null) {
@@ -47,21 +53,36 @@ public class WavesController : MonoBehaviour
     }
   }
 
+#endregion
+
+#region METHODS
+
   /// <summary>
-  /// Start is called before the first frame update.
+  /// Start the waves.
   /// </summary>
-  void
-  Start() {
-    StartCoroutine(StartWaves());
+  public void
+  StartWaves() {
+    if (wavesCoroutine != null)
+      StopCoroutine(wavesCoroutine);
+    
+    currentWave = 0;
+    pendingWaves = 0;
+
+    wavesCoroutine = StartCoroutine(StartWavesCoroutine());
   }
   
   /// <summary>
-  /// Update is called once per frame.
+  /// Start the next wave.
   /// </summary>
-  void
-  Update() {
+  public void
+  StartNextWave() {
+    startNextWave = true;
   }
 
+  /// <summary>
+  /// Get the max number of waves.
+  /// </summary>
+  /// <returns>Max number of waves</returns>
   private int
   GetMaxWaves() {
     int maxWaves = 0;
@@ -77,10 +98,17 @@ public class WavesController : MonoBehaviour
   }
 
   private IEnumerator
-  StartWaves() {
+  StartWavesCoroutine() {
     int maxWaves = GetMaxWaves();
 
     for (currentWave = 0; currentWave < maxWaves; currentWave++) {
+
+      //while (!startNextWave) {
+      //  yield return null;
+      //}
+
+      startNextWave = false;
+
       foreach (WaveOrigin waveOrigin in waveOrigins) {
         if (waveOrigin.origin == null)
           continue;

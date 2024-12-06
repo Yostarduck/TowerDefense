@@ -34,6 +34,21 @@ public class BaseEnemy : BaseCharacter
   Update() {
     base.Update();
   }
+  
+  /// <summary>
+  /// Called when the object enters a trigger collider.
+  /// </summary>
+  /// <param name="other"></param>
+  protected void
+  OnTriggerEnter(Collider other) {
+    if (other.CompareTag("Player")) {
+      PlayerTower playerTower = other.GetComponent<PlayerTower>();
+
+      playerTower.Damage(attackDamage);
+      
+      Die();
+    }
+  }
 
 #endregion
 }

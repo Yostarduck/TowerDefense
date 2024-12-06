@@ -39,20 +39,29 @@ public class BaseTower : BaseEntity
       return;
     }
 
-    Vector2 ourPosition = new(transform.position.x, transform.position.z);
+    if (attackRange <= 0)
+      return;
 
-    HashSet<BaseEntity> enemiesInRange = new();
+    HashSet<BaseEnemy> enemiesInRange = EntitiesHandler.instance.GetClosestEnemies(this, attackRange);
 
-    foreach (BaseEnemy enemy in EntitiesHandler.instance.enemies) {
-      if (enemy == null)
-        continue;
+    if (enemiesInRange == null) {
+      if (focusList.Count > 0) {
+        OnFocusLostEvent?.Invoke();
+
+        focusList.Clear();
+      }
       
-      Vector2 enemyPosition = new(enemy.transform.position.x, enemy.transform.position.z);
+      return;
+    }
 
-      float distance = Vector2.Distance(ourPosition, enemyPosition);
+    if (enemiesInRange == null) {
+      if (focusList.Count > 0) {
+        OnFocusLostEvent?.Invoke();
 
-      if (distance <= attackRange)
-        enemiesInRange.Add(enemy);
+        focusList.Clear();
+      }
+      
+      return;
     }
     
     int newEnemiesToCount = enemiesInRange.Where(enemy => !focusList.Contains(enemy)).Count();
@@ -64,7 +73,7 @@ public class BaseTower : BaseEntity
     if (oldEnemiesToCount > 0)
       OnFocusLostEvent?.Invoke();
 
-    focusList = enemiesInRange;
+    focusList = enemiesInRange.Cast<BaseEntity>().ToHashSet();
   }
 
 #endregion
