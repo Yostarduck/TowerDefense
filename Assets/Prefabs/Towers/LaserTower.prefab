@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2506efc0a3c48e44bad94f886fcf69a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  m_maxHealth: 100
   m_attackDamage: 2
   m_attackRange: 2
   m_attackCooldown: 5
@@ -56,8 +56,6 @@ MonoBehaviour:
   laserPrefab: {fileID: 3998315927452582131, guid: 27fecdf09c4208849a523642855179f6,
     type: 3}
   laserSpawnPoint: {fileID: 1570643732061187332}
-  laserInstance: {fileID: 3998315927452582131, guid: 27fecdf09c4208849a523642855179f6,
-    type: 3}
 --- !u!1 &1182298997779635204
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +117,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: c234e489e909ccb4d8eb5a20095136af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -202,7 +200,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: bd71c5299cb3476418c1120744257f48, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -316,7 +314,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: a250b15f01b63664d8339ee829090af2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

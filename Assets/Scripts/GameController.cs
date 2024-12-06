@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -50,7 +51,10 @@ public class GameController : MonoBehaviour
   TMPro.TextMeshProUGUI WaveText;
 
   [SerializeField]
-  GameObject NextWaveButton;
+  TMPro.TextMeshProUGUI TowersText;
+
+  [SerializeField]
+  GameObject EditContainer;
   
   [SerializeField]
   GameObject TitleScreen;
@@ -63,6 +67,11 @@ public class GameController : MonoBehaviour
   
   [SerializeField]
   GameObject VictoryScreen;
+
+  [SerializeField]
+  int towersPerRound = 5;
+
+  int towerPoints = 0;
 
   private bool editMode = false;
 
@@ -123,6 +132,7 @@ public class GameController : MonoBehaviour
 
   /// <summary>
   /// Update is called once per frame.
+  /// This is where the tower building logic is.
   /// </summary>
   void
   Update() {
@@ -158,6 +168,12 @@ public class GameController : MonoBehaviour
         PreviewCubeMaterial.color = Color.green;
       }
 
+      if (towerPoints <= 0) {
+        if (PreviewCubeMaterial != null) {
+          PreviewCubeMaterial.color = Color.red;
+        }
+      }
+
       if (EntitiesHandler.isInitialized) {
         HashSet<BaseTower> towers = EntitiesHandler.instance.towers;
 
@@ -181,11 +197,11 @@ public class GameController : MonoBehaviour
       }
     }
 
-    if (mouse.leftButton.wasPressedThisFrame) {
+    if (towerPoints > 0 && mouse.leftButton.wasPressedThisFrame && !IsPointerOverUIObject()) {
       BuildTower(position);
     }
 
-    if (mouse.rightButton.wasPressedThisFrame) {
+    if (mouse.rightButton.wasPressedThisFrame && !IsPointerOverUIObject()) {
       DestroyTower(position);
     }
   }
@@ -228,6 +244,9 @@ public class GameController : MonoBehaviour
     }
 
     Instantiate(SelectedTowerPrefab, new(position.x, 0.0f, position.y), Quaternion.identity);
+
+    towerPoints--;
+    UpdateTowersText();
   }
   
   /// <summary>
@@ -256,6 +275,9 @@ public class GameController : MonoBehaviour
       return;
 
     tower.Die();
+
+    towerPoints++;
+    UpdateTowersText();
   }
 
   /// <summary>
@@ -311,14 +333,34 @@ public class GameController : MonoBehaviour
       return;
     }
 
-    if (NextWaveButton == null) {
-      Debug.LogWarning("Next wave button not set", gameObject);
+    if (EditContainer == null) {
+      Debug.LogWarning("EditContainer not set", gameObject);
       return;
     }
     
-    NextWaveButton.SetActive(true);
+    EditContainer.SetActive(true);
+
+    towerPoints += towersPerRound;
 
     UpdateWaveText();
+    UpdateTowersText();
+  }
+
+  /// <summary>
+  /// Start the next wave.
+  /// </summary>
+  public void
+  StartNextWave() {
+    if (!WavesController.isInitialized) {
+      Debug.LogWarning("WavesController not initialized", gameObject);
+      return;
+    }
+
+    editMode = false;
+    SelectedTowerPrefab = null;
+    PreviewCube.SetActive(false);
+
+    WavesController.instance.StartNextWave();
   }
 
   /// <summary>
@@ -350,6 +392,22 @@ public class GameController : MonoBehaviour
   public void
   RestartGame() {
     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+  }
+
+  /// <summary>
+  /// Cast a ray to test if Input.mousePosition is over any UI object in EventSystem.current. This is a replacement
+  /// for IsPointerOverGameObject() which does not work on Android in 4.6.0f3
+  /// </summary>
+  private bool
+  IsPointerOverUIObject() {
+      // Referencing this code for GraphicRaycaster https://gist.github.com/stramit/ead7ca1f432f3c0f181f
+      // the ray cast appears to require only eventData.position.
+      PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+      eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+  
+      List<RaycastResult> results = new List<RaycastResult>();
+      EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+      return results.Count > 0;
   }
 
 #endregion
@@ -392,6 +450,15 @@ public class GameController : MonoBehaviour
     WaveText.text = "Wave: " + (WavesController.instance.CurrentWave + 1).ToString() + "/" + WavesController.instance.GetMaxWaves();
   }
   
+  private void
+  UpdateTowersText() {
+    if (TowersText == null) {
+      Debug.LogWarning("Towers text not set", gameObject);
+      return;
+    }
+
+    TowersText.text = "Towers Available: " + towerPoints.ToString();
+  }
 #endregion
 
 #region SCREENS_METHODS

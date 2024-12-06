@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class WizardTower : BaseTower
 {
+#region WIZARD_TOWER_PROPERTIES
+  
+  [Header("Wizard Tower Properties")]
+
+  [SerializeField]
+  protected ParticleSystem circleParticleSystem;
+
+#endregion
+
 #region UNITY_METHODS
 
   /// <summary>
@@ -12,6 +21,11 @@ public class WizardTower : BaseTower
   new protected void
   Start() {
     base.Start();
+
+    if (circleParticleSystem != null) {
+      ParticleSystem.ShapeModule shape = circleParticleSystem.shape;
+      shape.radius = attackRange;
+    }
 
     StartCoroutine(AttackCoroutine());
   }
